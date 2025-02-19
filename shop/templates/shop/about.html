@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Mike Sonko Fashion">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mike Sonko Fashion</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <header class="header" style="padding: 0; background: #fff;">
+        <div class="container">
+            <div class="row align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
+                <!-- Logo Section -->
+                <div class="col-lg-3 col-md-3 col-6">
+                    <div class="header__logo">
+                        <a href="{% url 'home' %}" class="web-name" 
+                            style="font-size: 28px; font-weight: bold; color: #000; text-decoration: none;">Mike Sonko Fashion</a>
+                    </div>
+                </div>
+    
+                <!-- Desktop Menu -->
+                <nav class="header__menu d-none d-lg-flex">
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'shop' %}">Shop</a></li>
+                        <li class="has-dropdown"><a href="#">Pages</a>
+                            <ul class="dropdown">
+                                <li class="active"><a href="{% url 'about' %}">About Us</a></li>
+                                {% if product.slug %}
+                                <li><a href="{% url 'shop-details' product.slug %}">View Product</a></li>
+                                {% endif %}
+                                <li><a href="{% url 'shopping-cart' %}">Shopping Cart</a></li>
+                                {% comment %} <li><a href="{% url 'checkout' %}">Check Out</a></li> {% endcomment %}
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </nav>
+    
+                <!-- Mobile Menu Button -->
+                <div class="col-6 d-block d-lg-none text-end">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Fullscreen Mobile Menu -->
+        <nav class="mobile-nav" id="mobile-nav">
+            <ul>
+                <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'shop' %}">Shop</a></li>
+                <li class="has-dropdown"><a href="#">Pages</a>
+                    <ul class="dropdown">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        {% if product.slug %}
+                        <li><a href="{% url 'shop-details' product.slug %}">View Product</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'shopping-cart' %}">Shopping Cart</a></li>
+                        {% comment %} <li><a href="{% url 'checkout' %}">Check Out</a></li> {% endcomment %}
+                    </ul>
+                </li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- JavaScript for Menu Toggle -->
+    <script>
+        function toggleMobileMenu() {
+            var menu = document.getElementById("mobile-nav");
+            var button = document.getElementById("mobile-menu-btn");
+            menu.classList.toggle("active");
+            button.classList.toggle("open");
+        }
+    </script>
+    
+    <!-- CSS for Responsive Menu -->
+    <style>
+        /* Mobile Menu Button */
+        #mobile-menu-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            position: relative;
+            z-index: 1100;
+        }
+    
+        .bar {
+            width: 35px;
+            height: 4px;
+            background: #000;
+            transition: 0.3s;
+        }
+    
+        .open .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+    
+        .open .bar:nth-child(2) {
+            opacity: 0;
+        }
+    
+        .open .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+    
+        /* Fullscreen Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-100%);
+            transition: transform 0.4s ease-in-out;
+            z-index: 1000;
+            opacity: 0;
+        }
+    
+        .mobile-nav.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    
+        .mobile-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+    
+        .mobile-nav ul li {
+            margin: 20px 0;
+        }
+    
+        .mobile-nav ul li a {
+            color: #fff;
+            font-size: 24px;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+    
+        .mobile-nav ul li a:hover {
+            color: #ffcc00;
+        }
+    
+        /* Dropdown Menu */
+        .has-dropdown ul {
+            display: none;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    
+        .has-dropdown:hover ul {
+            display: flex;
+        }
+    
+        .has-dropdown ul li {
+            margin: 10px 0;
+        }
+    
+        .has-dropdown ul li a {
+            color: #ffcc00;
+            font-size: 20px;
+        }
+    
+        /* Responsive Behavior */
+        @media (min-width: 992px) {
+            .mobile-nav, #mobile-menu-btn {
+                display: none;
+            }
+            .header__menu {
+                display: flex !important;
+            }
+        }
+    </style>
+    
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>About Us</h4>
+                        <div class="breadcrumb__links">
+                            <a href="{% url 'home' %}">Home</a>
+                            <span>About Us</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+       <!-- About Fashion Section Begin -->
+<section class="about spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="about__pic text-center">
+                    <img src="{% static 'img/about/fashion-team.jpg' %}" alt="Our Fashion Team">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="about__item">
+                    <h4>Who We Are</h4>
+                    <p>We are a trendsetting fashion brand dedicated to bringing the latest styles and high-quality apparel to fashion enthusiasts. Our passion lies in curating designs that inspire confidence and individuality.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="about__item">
+                    <h4>Why Choose Us</h4>
+                    <p>We stay ahead of the fashion curve, offering unique and stylish collections that cater to every personality. Our commitment to quality, sustainability, and customer satisfaction sets us apart in the world of fashion.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Fashion Section End -->
+
+    <!-- Team Section Begin -->
+    <section class="team spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <span>Our Team</span>
+                        <h2>Meet Our Kenyan Team</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="team__item">
+                        <img src="{% static 'img/about/team-kenya-1.jpg' %}" alt="">
+                        <h4>Joseph Washika</h4>
+                        <span>Founder & CEO</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="team__item">
+                        <img src="{% static 'img/about/team-kenya-3.jpg' %}" alt="">
+                        <h4>Ignatius Ondieki</h4>
+                        <span>Founder & Developer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Team Section End -->
+
+<!-- Fashion Partners Section Begin -->
+<section class="clients spad">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Our Fashion Partners</span>
+                    <h2>Trusted by Leading Fashion Brands</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-6">
+                <a href="#" class="client__item"><img src="{% static 'img/clients/nike.png' %}" alt="Nike" style="max-width: 90px; height: auto;"></a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-6">
+                <a href="#" class="client__item"><img src="{% static 'img/clients/adidas.png' %}" alt="Adidas" style="max-width: 80px; height: auto;"></a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-6">
+                <a href="#" class="client__item"><img src="{% static 'img/clients/zara.png' %}" alt="Zara" style="max-width: 80px; height: auto;"></a>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 col-6">
+                <a href="#" class="client__item"><img src="{% static 'img/clients/lv.png' %}" alt="lv" style="max-width: 70px; height: auto;"></a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Fashion Partners Section End -->
+
+
+
+    <!-- Footer Section Begin -->
+    <footer class="footer" style="background: #111; color: #fff; padding: 40px 0; text-align: center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__about" style="margin-bottom: 20px;">
+                        <h2 style="font-size: 24px; font-weight: bold; color: #e53637; margin-bottom: 15px;">
+                            Mike Sonko Fashion
+                        </h2>
+                        <p style="color: #b7b7b7; font-size: 16px; max-width: 600px; margin: 0 auto;">
+                            Your trusted fashion store, providing quality products with the best customer experience.
+                        </p>
+                        <p style="color: #b7b7b7; font-size: 14px; margin-top: 10px;">
+                            <strong>Email:</strong> igantiusx47@gmail.com | <strong>Phone:</strong> +254 703 263 320
+                        </p>
+                        <p style="color: #b7b7b7; font-size: 14px;">
+                            <strong>Address:</strong> Nairobi, Kenya
+                        </p>
+                    </div>
+    
+                    <div class="footer__social" style="margin-bottom: 20px;">
+                        <a href="#" style="color: #fff; font-size: 18px; margin: 0 10px; transition: 0.3s;">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" style="color: #fff; font-size: 18px; margin: 0 10px; transition: 0.3s;">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" style="color: #fff; font-size: 18px; margin: 0 10px; transition: 0.3s;">
+                            <i class="fa fa-pinterest"></i>
+                        </a>
+                        <a href="#" style="color: #fff; font-size: 18px; margin: 0 10px; transition: 0.3s;">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+    
+                    <div class="footer__copyright__text" style="border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 15px;">
+                        <p style="color: #b7b7b7; font-size: 14px;">
+                            © <script>document.write(new Date().getFullYear());</script> 
+                            <span style="color: #e53637; font-weight: bold;">Mike Sonko Fashion</span>. 
+                            All rights reserved.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>    
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    {% load static %}
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nicescroll.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/mixitup.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
